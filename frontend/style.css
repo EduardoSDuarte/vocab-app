@@ -1,0 +1,344 @@
+/* ---------- Tokens ---------- */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at top, #262319, #1c1a16 70%);
+  color: #2a2620;
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: env(safe-area-inset-top, 20px) 20px calc(env(safe-area-inset-bottom, 20px) + 20px);
+  display: flex;
+  flex-direction: column;
+}
+
+.oculta { display: none !important; }
+
+/* ---------- Cabeçalho tipo etiqueta de gaveta ---------- */
+.drawer-label {
+  color: #d8d0ba;
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 6px 22px;
+}
+
+.btn-voltar, .btn-sair {
+  background: none;
+  border: none;
+  color: #b5b066;
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px;
+}
+.btn-voltar:hover, .btn-sair:hover { color: #9a9f6d; }
+
+/* ---------- Cartão base (index card) ---------- */
+.card {
+  background: #f2ede0;
+  border-radius: 4px;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.35);
+  padding: 28px 22px 24px;
+  position: relative;
+  border-top: 3px solid #9c3a26;
+}
+
+.titulo-maquina {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 22px;
+  margin: 0 0 20px;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Formulários ---------- */
+form { display: flex; flex-direction: column; gap: 14px; }
+
+label {
+  font-size: 12px;
+  color: #6b6255;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 16px;
+  color: #2a2620;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #b7ab8c;
+  padding: 8px 2px;
+  outline: none;
+}
+input:focus { border-bottom: 2px solid #3d6e64; padding-bottom: 7px; }
+
+.btn {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 14px;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: 3px;
+  padding: 13px 18px;
+  cursor: pointer;
+  transition: transform 0.08s ease;
+}
+.btn:active { transform: scale(0.98); }
+
+.btn-primario {
+  background: #3d6e64;
+  color: #eef4f2;
+  font-weight: 700;
+}
+.btn-primario:hover { background: #294a43; }
+
+.btn-link {
+  margin-top: 18px;
+  background: none;
+  border: none;
+  color: #6b6255;
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+  align-self: center;
+}
+
+.erro {
+  color: #9c3a26;
+  font-size: 12px;
+  margin: -6px 0 0;
+  min-height: 14px;
+}
+
+/* ---------- Tela inicial: opções em formato de carta ---------- */
+.tela { display: flex; flex-direction: column; flex: 1; }
+.card-form { margin-top: 8px; }
+
+.opcoes-home {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.carta-opcao {
+  background: #f2ede0;
+  border: none;
+  border-top: 3px solid #3d6e64;
+  border-radius: 4px;
+  padding: 18px 20px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.carta-opcao:active { transform: scale(0.99); }
+
+.carta-num {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 11px;
+  color: #6b6255;
+}
+.carta-titulo {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 17px;
+  color: #2a2620;
+  text-transform: lowercase;
+}
+.carta-sub {
+  font-size: 12px;
+  color: #6b6255;
+}
+
+/* ---------- Listas de palavras ---------- */
+.lista-palavras {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lista-palavras li {
+  background: #f2ede0;
+  border-radius: 3px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.lista-palavras .par {
+  display: flex;
+  gap: 10px;
+}
+.lista-palavras .par .en { font-weight: 700; }
+.lista-palavras .par .pt { color: #6b6255; }
+
+.lista-palavras.selecionavel li {
+  cursor: pointer;
+  border-left: 4px solid transparent;
+}
+.lista-palavras.selecionavel li.marcada {
+  border-left: 4px solid #3d6e64;
+  background: #e8f0ec;
+}
+
+.btn-remover {
+  background: none;
+  border: none;
+  color: #9c3a26;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.instrucao {
+  color: #d8d0ba;
+  font-size: 13px;
+  margin: 0;
+}
+
+.btn-flutuante {
+  margin-top: 20px;
+  align-self: stretch;
+}
+
+.vazio {
+  color: #d8d0ba;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 40px;
+  line-height: 1.6;
+}
+
+/* ---------- Cartão de estudo (catálogo) ---------- */
+.carta-catalogo {
+  background: #f2ede0;
+  border-radius: 4px;
+  padding: 30px 24px 26px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.4);
+  border-top: 3px solid #9c3a26;
+  margin-top: 12px;
+  text-align: center;
+  position: relative;
+}
+
+.carta-catalogo #carta-num {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+}
+
+.carta-direcao {
+  display: block;
+  font-size: 11px;
+  color: #3d6e64;
+  text-transform: lowercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+.carta-palavra-linha {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 18px 0 16px;
+}
+.carta-palavra-linha .carta-palavra { margin: 0; }
+
+.btn-ouvir {
+  background: #d8d0ba;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-ouvir:active { transform: scale(0.94); }
+
+.label-retype {
+  font-size: 12px;
+  color: #6b6255;
+  text-transform: lowercase;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+#form-retype { display: flex; flex-direction: column; gap: 10px; margin-bottom: 4px; }
+#form-retype input {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 16px;
+  color: #2a2620;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #b7ab8c;
+  padding: 8px 2px;
+  outline: none;
+  text-align: center;
+}
+
+.carta-palavra {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 30px;
+  margin: 18px 0 16px;
+  text-transform: lowercase;
+  word-break: break-word;
+}
+
+.linha-catalogo {
+  border-bottom: 1px dashed #b7ab8c;
+  margin: 0 auto 20px;
+  width: 70%;
+}
+
+#form-resposta input {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+#form-resposta { gap: 10px; }
+
+.feedback { margin-top: 6px; display: flex; flex-direction: column; gap: 14px; }
+.feedback-texto {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 16px;
+  margin: 0;
+  padding: 14px;
+  border-radius: 3px;
+}
+.feedback-texto.certo { background: #e4ecdc; color: #3f6b34; }
+.feedback-texto.errado { background: #f3ddd4; color: #9c3a26; }
+
+#estudo-contador { font-size: 12px; }

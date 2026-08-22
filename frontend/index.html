@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fichário">
+<title>Fichário de Vocabulário</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- TELA: LOGIN -->
+  <section class="tela" id="tela-login">
+    <div class="drawer-label">Fichário — acesso</div>
+    <div class="card card-form">
+      <h1 class="titulo-maquina">entrar</h1>
+      <form id="form-login">
+        <label>e-mail
+          <input type="email" id="login-email" required autocomplete="username">
+        </label>
+        <label>senha
+          <input type="password" id="login-senha" required autocomplete="current-password">
+        </label>
+        <p class="erro" id="login-erro"></p>
+        <button type="submit" class="btn btn-primario">entrar</button>
+      </form>
+      <button class="btn-link" id="ir-cadastro">ainda não tenho fichário — criar conta</button>
+    </div>
+  </section>
+
+  <!-- TELA: CADASTRO -->
+  <section class="tela oculta" id="tela-cadastro">
+    <div class="drawer-label">Fichário — nova conta</div>
+    <div class="card card-form">
+      <h1 class="titulo-maquina">criar conta</h1>
+      <form id="form-cadastro">
+        <label>nome
+          <input type="text" id="cad-nome" required>
+        </label>
+        <label>e-mail
+          <input type="email" id="cad-email" required autocomplete="username">
+        </label>
+        <label>senha
+          <input type="password" id="cad-senha" required minlength="6" autocomplete="new-password">
+        </label>
+        <p class="erro" id="cadastro-erro"></p>
+        <button type="submit" class="btn btn-primario">criar minha conta</button>
+      </form>
+      <button class="btn-link" id="ir-login">já tenho conta — entrar</button>
+    </div>
+  </section>
+
+  <!-- TELA: INICIAL -->
+  <section class="tela oculta" id="tela-home">
+    <div class="drawer-label">
+      <span id="home-saudacao">Fichário de <span id="home-nome"></span></span>
+      <button class="btn-sair" id="btn-sair" aria-label="Sair">sair</button>
+    </div>
+    <div class="opcoes-home">
+      <button class="carta-opcao" data-acao="adicionar">
+        <span class="carta-num">nº 01</span>
+        <span class="carta-titulo">adicionar palavras</span>
+        <span class="carta-sub">cadastro manual</span>
+      </button>
+      <button class="carta-opcao" data-acao="embaralhado">
+        <span class="carta-num">nº 02</span>
+        <span class="carta-titulo">cartas embaralhadas</span>
+        <span class="carta-sub">estuda tudo, na sorte</span>
+      </button>
+      <button class="carta-opcao" data-acao="escolher">
+        <span class="carta-num">nº 03</span>
+        <span class="carta-titulo">escolher cartas</span>
+        <span class="carta-sub">estuda só o que marcar</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- TELA: ADICIONAR PALAVRAS -->
+  <section class="tela oculta" id="tela-adicionar">
+    <div class="drawer-label">
+      <button class="btn-voltar" data-voltar="home">‹ voltar</button>
+      adicionar palavras
+    </div>
+    <div class="card card-form">
+      <form id="form-palavra">
+        <label>palavra em inglês
+          <input type="text" id="nova-ingles" required autocomplete="off">
+        </label>
+        <label>tradução em português
+          <input type="text" id="nova-portugues" required autocomplete="off">
+        </label>
+        <p class="erro" id="palavra-erro"></p>
+        <button type="submit" class="btn btn-primario">arquivar carta</button>
+      </form>
+    </div>
+    <ul class="lista-palavras" id="lista-adicionar"></ul>
+  </section>
+
+  <!-- TELA: DIREÇÃO DO JOGO (usada no modo embaralhado) -->
+  <section class="tela oculta" id="tela-direcao">
+    <div class="drawer-label">
+      <button class="btn-voltar" data-voltar="home">‹ voltar</button>
+      cartas embaralhadas
+    </div>
+    <p class="instrucao">de que jeito você quer treinar?</p>
+    <div class="opcoes-home">
+      <button class="carta-opcao" data-direcao="en-pt">
+        <span class="carta-num">nº 01</span>
+        <span class="carta-titulo">inglês → português</span>
+        <span class="carta-sub">vê a palavra em inglês, digita a tradução</span>
+      </button>
+      <button class="carta-opcao" data-direcao="pt-en">
+        <span class="carta-num">nº 02</span>
+        <span class="carta-titulo">português → inglês</span>
+        <span class="carta-sub">vê a tradução, digita a palavra em inglês</span>
+      </button>
+      <button class="carta-opcao" data-direcao="misto">
+        <span class="carta-num">nº 03</span>
+        <span class="carta-titulo">misturado</span>
+        <span class="carta-sub">os dois jeitos, alternando à sorte</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- TELA: ESCOLHER CARTAS -->
+  <section class="tela oculta" id="tela-escolher">
+    <div class="drawer-label">
+      <button class="btn-voltar" data-voltar="home">‹ voltar</button>
+      escolher cartas
+    </div>
+    <p class="instrucao">marque as palavras que quer estudar agora</p>
+    <ul class="lista-palavras selecionavel" id="lista-escolher"></ul>
+    <button class="btn btn-primario btn-flutuante" id="btn-iniciar-escolhidas">estudar selecionadas</button>
+  </section>
+
+  <!-- TELA: ESTUDO (usada tanto no embaralhado quanto no escolher) -->
+  <section class="tela oculta" id="tela-estudo">
+    <div class="drawer-label">
+      <button class="btn-voltar" id="btn-sair-estudo">‹ encerrar</button>
+      <span id="estudo-contador"></span>
+    </div>
+
+    <div class="carta-catalogo" id="carta-estudo">
+      <span class="carta-num" id="carta-num">nº —</span>
+      <span class="carta-direcao" id="carta-direcao"></span>
+      <div class="carta-palavra-linha">
+        <div class="carta-palavra" id="carta-palavra">—</div>
+        <button type="button" class="btn-ouvir" id="btn-ouvir" aria-label="Ouvir pronúncia">🔊</button>
+      </div>
+      <div class="linha-catalogo"></div>
+
+      <form id="form-resposta">
+        <input type="text" id="resposta-input" placeholder="digite a tradução" autocomplete="off" autocapitalize="off">
+        <button type="submit" class="btn btn-primario">verificar</button>
+      </form>
+
+      <div class="feedback oculta" id="feedback">
+        <p class="feedback-texto" id="feedback-texto"></p>
+
+        <form id="form-retype" class="oculta">
+          <label class="label-retype">digite a palavra certa pra continuar
+            <input type="text" id="retype-input" autocomplete="off" autocapitalize="off">
+          </label>
+          <p class="erro" id="retype-erro"></p>
+          <button type="submit" class="btn btn-primario">continuar</button>
+        </form>
+
+        <button class="btn btn-primario oculta" id="btn-proxima">próxima carta ›</button>
+      </div>
+    </div>
+
+    <p class="vazio oculta" id="estudo-vazio">nenhuma carta disponível ainda. volte e cadastre algumas palavras.</p>
+  </section>
+
+</div>
+
+<script src="app.js?v=2"></script>
+</body>
+</html>
