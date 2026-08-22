@@ -1,0 +1,11 @@
+# Ambiente virtual Python
+venv/
+__pycache__/
+*.pyc
+
+# Banco de dados local (não faz sentido subir dados de teste pro GitHub)
+backend/vocab.db
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db

@@ -1,3 +1,4 @@
+import os
 import random
 
 from fastapi import Depends, FastAPI, HTTPException, status
@@ -14,14 +15,25 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Vocab App API")
 
-# Libera acesso do frontend (rodando em outra origem, ex: file:// ou outro domínio)
+# Em produção, defina a variável de ambiente FRONTEND_URL com o endereço do seu
+# site publicado (ex: "https://seu-app.netlify.app"), pra só ele poder acessar
+# esta API. Sem essa variável definida, libera geral - útil pra testar localmente.
+frontend_url = os.environ.get("FRONTEND_URL")
+origens_permitidas = [frontend_url] if frontend_url else ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origens_permitidas,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/")
+def raiz():
+    """Endpoint simples só pra confirmar que a API está no ar (útil depois do deploy)."""
+    return {"status": "ok", "app": "Vocab App API"}
 
 
 # ---------- Autenticação ----------

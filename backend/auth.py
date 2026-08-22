@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+import os
+import warnings
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -9,9 +11,16 @@ from sqlalchemy.orm import Session
 from database import get_db
 import models
 
-# Em produção real, essa chave deveria vir de uma variável de ambiente,
-# nunca ficar escrita direto no código.
-SECRET_KEY = "troque-esta-chave-antes-de-colocar-em-producao"
+# Em produção (Render), defina a variável de ambiente SECRET_KEY com um valor
+# aleatório forte. Gere um com: python -c "import secrets; print(secrets.token_hex(32))"
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    SECRET_KEY = "chave-insegura-apenas-para-testes-locais"
+    warnings.warn(
+        "SECRET_KEY não definida - usando uma chave insegura de desenvolvimento. "
+        "Defina a variável de ambiente SECRET_KEY antes de publicar em produção."
+    )
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # token válido por 7 dias
 
