@@ -1,6 +1,6 @@
-// ATENÇÃO: troque essa URL pelo endereço do seu backend quando publicar
-// (ex: "https://seu-app.onrender.com"). Localmente, aponta pro FastAPI rodando na sua máquina.
-const API_BASE = "http://127.0.0.1:8000";
+// URL do backend publicado no Render. Em desenvolvimento local, troque temporariamente
+// para "http://127.0.0.1:8000" se precisar testar contra o backend rodando na sua máquina.
+const API_BASE = "https://vocab-app-tzed.onrender.com";
 
 const estado = {
   token: localStorage.getItem("token") || null,
