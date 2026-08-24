@@ -1,6 +1,6 @@
 // Aumente esse número (v2, v3...) toda vez que atualizar arquivos do app -
 // isso força o navegador a descartar o cache antigo e buscar a versão nova.
-const CACHE_NOME = "fichario-v3";
+const CACHE_NOME = "fichario-v4";
 const ARQUIVOS = ["./index.html", "./style.css", "./app.js", "./manifest.json"];
 
 self.addEventListener("install", (e) => {
