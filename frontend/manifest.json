@@ -1,6 +1,6 @@
 {
-  "name": "Evocap",
-  "short_name": "Evocap",
+  "name": "Fichário de Vocabulário",
+  "short_name": "Fichário",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#1c1a16",
