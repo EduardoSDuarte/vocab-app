@@ -21,15 +21,25 @@ async function api(caminho, { method = "GET", body = null, autenticado = true } 
   const headers = { "Content-Type": "application/json" };
   if (autenticado && estado.token) headers["Authorization"] = `Bearer ${estado.token}`;
 
-  const resp = await fetch(`${API_BASE}${caminho}`, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : null,
-  });
+  let resp;
+  try {
+    resp = await fetch(`${API_BASE}${caminho}`, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : null,
+    });
+  } catch (erroDeRede) {
+    // Falha de rede de verdade (sem internet, servidor fora do ar) - não é "token inválido"
+    const erro = new Error("Não conseguimos conectar ao servidor. Tenta de novo em instantes.");
+    erro.semConexao = true;
+    throw erro;
+  }
 
   const dados = await resp.json().catch(() => ({}));
   if (!resp.ok) {
-    throw new Error(dados.detail || "Algo deu errado. Tenta de novo.");
+    const erro = new Error(dados.detail || "Algo deu errado. Tenta de novo.");
+    erro.status = resp.status;
+    throw erro;
   }
   return dados;
 }
@@ -40,7 +50,16 @@ document.getElementById("form-login").addEventListener("submit", async (e) => {
   const email = document.getElementById("login-email").value;
   const senha = document.getElementById("login-senha").value;
   const erroEl = document.getElementById("login-erro");
+  const botao = e.target.querySelector("button[type=submit]");
   erroEl.textContent = "";
+  botao.disabled = true;
+  botao.textContent = "entrando...";
+
+  // Se demorar mais que 3s, provavelmente o servidor gratuito está "acordando"
+  const avisoLento = setTimeout(() => {
+    erroEl.textContent = "O servidor está acordando (plano gratuito) - só um instante...";
+    erroEl.style.color = "#6b6255";
+  }, 3000);
 
   try {
     const { access_token } = await api("/login", {
@@ -52,7 +71,12 @@ document.getElementById("form-login").addEventListener("submit", async (e) => {
     localStorage.setItem("token", access_token);
     await abrirHome();
   } catch (err) {
+    erroEl.style.color = "";
     erroEl.textContent = err.message;
+  } finally {
+    clearTimeout(avisoLento);
+    botao.disabled = false;
+    botao.textContent = "entrar";
   }
 });
 
@@ -92,11 +116,18 @@ async function abrirHome() {
   try {
     const me = await api("/me");
     document.getElementById("home-nome").textContent = me.nome;
-  } catch {
-    // token inválido/expirado - manda de volta pro login
-    estado.token = null;
-    localStorage.removeItem("token");
-    mostrarTela("tela-login");
+  } catch (erro) {
+    if (erro.status === 401) {
+      // token realmente inválido/expirado - manda de volta pro login
+      estado.token = null;
+      localStorage.removeItem("token");
+      mostrarTela("tela-login");
+      return;
+    }
+    // servidor lento/fora do ar (comum no plano gratuito do Render após inatividade) -
+    // NÃO apaga o login, só avisa e tenta de novo automaticamente
+    mostrarTela("tela-carregando");
+    setTimeout(abrirHome, 4000);
     return;
   }
   mostrarTela("tela-home");
